@@ -112,11 +112,21 @@ class DataSender(PersistentBot):
         self.status_reload = True
         time.sleep(1)
         return '%s\nFrames sent %s' % (self.status[1], self.frames)
-    
+
+    @botcmd
+    def report(self, msg, args):
+        """ Identify this instance """
+        return str(self.jid)
+
     @botcmd
     def time(self, msg, args):
         """ Displays current server time """
         return str(datetime.datetime.now())
+
+    @botcmd
+    def gmtime(self, msg, args):
+        """ Displays current server time (GMT) """
+        return str(datetime.datetime.now(GMT))
 
     @botcmd
     def midnight(self, msg, args):
