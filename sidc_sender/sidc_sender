@@ -263,7 +263,7 @@ if __name__ == '__main__':
     logging.info('Whitelist %s' % whitelist)
     logging.info('Room %s' % room)
 
-    bot = DataSender(sys.argv[1], sys.argv[2], whitelist)
+    bot = DataSender(sys.argv[1], sys.argv[2], whitelist, '\\')
 
     thread_status = threading.Thread(target = bot.thread_sidc_status)
     thread_stream = threading.Thread(target = bot.thread_stream)
