@@ -114,6 +114,11 @@ class DataSender(PersistentBot):
         return '%s\nFrames sent %s' % (self.status[1], self.frames)
 
     @botcmd
+    def frames(self, msg, args):
+        """ Number of frames sent """
+        return '%s' % self.frames
+
+    @botcmd
     def report(self, msg, args):
         """ Identify this instance """
         return str(self.jid)
