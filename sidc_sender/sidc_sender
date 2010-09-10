@@ -120,6 +120,12 @@ class DataSender(PersistentBot):
         return '%s' % self.frames
 
     @botcmd
+    def reset_frames(self, msg, args):
+        if not self.whitelisted(msg):
+            return 'You are not allowed to do this'
+        self.frames = 0
+
+    @botcmd
     def report(self, msg, args):
         """ Identify this instance """
         return str(self.jid)
@@ -144,7 +150,7 @@ class DataSender(PersistentBot):
     def die(self, msg, args):
         """ Quit """
         if not self.whitelisted(msg):
-            return 'You are not allowed to this'
+            return 'You are not allowed to do this'
         self.quit()
 
     def idle_proc(self):
