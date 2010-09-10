@@ -79,6 +79,7 @@ class DataSender(PersistentBot):
         self.status_reload = False
         self.update_status = ''
         self.frames = 0
+        self.room = ''
 
     def whitelisted(self, msg):
         """ Check whitelist """
@@ -166,6 +167,7 @@ class DataSender(PersistentBot):
 
     def thread_sidc_status(self):
         first = True
+        update_counter = 0
         while not self.thread_killed:
             res = get_sidc_config()
             if res[0] == -1:
@@ -187,6 +189,13 @@ class DataSender(PersistentBot):
                 self.cfg = res[1]
 
             first = False
+
+            update_counter += 1
+            if update_counter == 5:
+                self.status = self.status
+                self.join_room(self.room)
+                update_counter = 0
+
             for i in range(60):
                 time.sleep(1)
                 if self.thread_killed:
@@ -273,5 +282,6 @@ if __name__ == '__main__':
         thread_stream.start()
 
     bot.join_room(room)
+    bot.room = room
     bot.serve_forever(connect_callback = start_threads)
     bot.thread_killed = True
