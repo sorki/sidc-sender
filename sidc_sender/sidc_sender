@@ -258,27 +258,26 @@ class DataSender(PersistentBot):
 
 defaults = '''
 [config]
+jid = nouser@example.org
+pass = nopassword
 whitelist = nouser@example.org, nouser@example.org
 room = noroom@conf.example.org
 '''
  
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print 'Usage: %s login@host password' % sys.argv[0]
-        sys.exit(1)
-
     config = ConfigParser.RawConfigParser()
     config.readfp(io.BytesIO(defaults))
     config.read('/etc/sidc_sender.conf')
 
-    whitelist = config.get('config', 'whitelist').split(',')
+    get = lambda x: config.get('config', x).strip()
+    whitelist = get('whitelist').split(',')
     whitelist = map(lambda x: x.strip(), whitelist)
 
-    room = config.get('config', 'room').strip()
+    room = get('room')
     logging.info('Whitelist %s' % whitelist)
     logging.info('Room %s' % room)
 
-    bot = DataSender(sys.argv[1], sys.argv[2], whitelist, '\\')
+    bot = DataSender(get('jid'), get('pass'), whitelist, '\\')
 
     thread_status = threading.Thread(target = bot.thread_sidc_status)
     thread_stream = threading.Thread(target = bot.thread_stream)
