@@ -2,7 +2,6 @@
 
 import io
 import os
-import sys
 import pytz
 import time 
 import psutil
