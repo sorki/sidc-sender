@@ -128,7 +128,7 @@ class DataSender(PersistentBot):
     @botcmd
     def report(self, msg, args):
         """ Identify this instance """
-        return str(self.jid)
+        return '(s) %s' %self.jid
 
     @botcmd
     def time(self, msg, args):
