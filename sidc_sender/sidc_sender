@@ -84,6 +84,9 @@ class DataSender(PersistentBot):
         """ Check whitelist """
         return msg.getFrom().getStripped() in self.whitelist
 
+    def ident(self):
+        return '(s) %s' %self.jid
+
     @botcmd
     def subscribe(self, msg, args):
         """ Subscribe to the broadcast list """
@@ -127,7 +130,7 @@ class DataSender(PersistentBot):
     @botcmd
     def report(self, msg, args):
         """ Identify this instance """
-        return '(s) %s' %self.jid
+        return self.ident()
 
     @botcmd
     def time(self, msg, args):
@@ -173,6 +176,8 @@ class DataSender(PersistentBot):
     def thread_sidc_status(self):
         first = True
         update_counter = 0
+        time.sleep(2)
+        self.send(self.room, self.ident(), typ='groupchat')
         while not self.thread_killed:
             res = get_sidc_config()
             if res[0] == -1:
