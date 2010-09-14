@@ -122,7 +122,7 @@ class DataSender(PersistentBot):
         ret = '\n'
         for jid in self.users:
             ret += '%s\n' % jid
-        return ret[:-2]
+        return ret[:-1]
 
     @botcmd
     def reset_subscribers(self, msg, args):
