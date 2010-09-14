@@ -92,10 +92,13 @@ class DataSender(PersistentBot):
         """ Subscribe to the broadcast list """
         user = msg.getFrom()
         if not self.whitelisted(msg):
+            logging.warning('Unauthorized subscription'
+                ' request by %s' % user)
             return 'You are not allowed to subscribe'
         if user in self.users:
             return 'You are already subscribed.'
         else:
+            logging.info('Subscription by %s' % user)
             self.users.append(user)
             return 'You are now subscribed.'
 
