@@ -266,7 +266,8 @@ class DataSender(PersistentBot):
 
             if file is not None:
                 new_lines = file.read().splitlines()
-                self.frames += len(new_lines)
+                if self.users != []:
+                    self.frames += len(new_lines)
                 for line in new_lines:
                     self.message_queue.append(DATA_PREFIX+line)
 
