@@ -293,6 +293,20 @@ class DataSender(PersistentBot):
 
         super(DataSender, self).callback_message(conn, msg)
 
+    def obsolete(self, jid, new_status):
+        if new_status == self.OFFLINE:
+            try:
+                idx = self.users.index(jid)
+                logging.info('Subscriber %s gone offline'
+                    ', unsubscribing' % jid)
+                del self.users[idx]
+            except ValueError:
+                pass
+
+    def callback_presence(self, conn, pre):
+        super(DataSender, self).callback_presence(conn, pre,
+            status_type_changed = self.obsolete)
+
 defaults = '''
 [config]
 jid = nouser@example.org
