@@ -112,6 +112,25 @@ class DataSender(PersistentBot):
             self.users.remove(user)
             return 'You are now unsubscribed.'
 
+    @botcmd
+    def subscribers(self, msg, args):
+        """ List of subscribers """
+        if self.users == []:
+            return 'No subscribers'
+
+        ret = '\n'
+        for jid in self.users:
+            ret += '%s\n' % jid
+        return ret[:-2]
+
+    @botcmd
+    def reset_subscribers(self, msg, args):
+        """ Delete all subscribers """
+        if not self.whitelisted(msg):
+            return 'You are not allowed to do this'
+        self.users = []
+        return 'Done'
+
     @botcmd(name='status')
     def current_status(self, msg, args):
         """ Get current status """
