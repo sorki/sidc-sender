@@ -199,8 +199,6 @@ class DataSender(PersistentBot):
     def thread_sidc_status(self):
         first = True
         update_counter = 0
-        time.sleep(2)
-        self.send(self.room, self.ident(), typ='groupchat')
         while not self.thread_killed:
             res = get_sidc_config()
             if res[0] == -1:
@@ -221,7 +219,11 @@ class DataSender(PersistentBot):
                 self.sidc = True
                 self.cfg = res[1]
 
-            first = False
+
+            if first:
+                time.sleep(5)
+                self.send(self.room, self.ident(), typ='groupchat')
+                first = False
 
             update_counter += 1
             if update_counter == 5:
