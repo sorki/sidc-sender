@@ -282,6 +282,16 @@ class DataSender(PersistentBot):
                 if self.thread_killed:
                     return
 
+    def callback_message(self, conn, msg):
+        txt = msg.getBody()
+        typ = msg.getType()
+
+        if typ == 'groupchat':
+            if (self.jid.getNode()+':') in txt:
+                nbody = txt[len(self.jid.getNode())+1:].strip()
+                msg.setBody(nbody)
+
+        super(DataSender, self).callback_message(conn, msg)
 
 defaults = '''
 [config]
