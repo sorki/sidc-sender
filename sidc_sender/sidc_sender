@@ -15,6 +15,7 @@ GMT = pytz.timezone('GMT')
 
 from pyjabberbot import PersistentBot, botcmd
 
+DATA_PREFIX = '| '
 
 def get_midnight():
     today = datetime.datetime.now(GMT)
@@ -265,7 +266,7 @@ class DataSender(PersistentBot):
                 new_lines = file.read().splitlines()
                 self.frames += len(new_lines)
                 for line in new_lines:
-                    self.message_queue.append(line)
+                    self.message_queue.append(DATA_PREFIX+line)
 
             if midnight < datetime.datetime.now(GMT):
                 logging.info('Day changed, changing file')
