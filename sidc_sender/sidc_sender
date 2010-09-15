@@ -289,7 +289,7 @@ class DataSender(PersistentBot):
         txt = msg.getBody()
         typ = msg.getType()
 
-        if typ == 'groupchat':
+        if typ == 'groupchat' and txt is not None:
             if (self.jid.getNode()+':') in txt:
                 nbody = txt[len(self.jid.getNode())+1:].strip()
                 msg.setBody(nbody)
