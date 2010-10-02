@@ -132,6 +132,37 @@ class DataSender(PersistentBot):
         self.users = []
         return 'Done'
 
+    @botcmd(name='log')
+    def loglvl(self, msg, args):
+        """ Change logging level to one of all/normal """
+        if not self.whitelisted(msg):
+            return 'You are not allowed to do this'
+
+        l = logging.getLogger()
+        if args == 'all':
+            l.setLevel(logging.DEBUG)
+            def d(a,b,c):
+                print b
+            self.conn.DEBUG = d
+        elif args == 'normal':
+            l.setLevel(logging.INFO)
+            def y(*args, **kwargs): pass
+            self.conn.DEBUG = y
+        else:
+            return 'No such level, only one of all/normal allowed'
+
+        return 'Level changed'
+
+    @botcmd
+    def joinroom(self, msg, args):
+        """ Join room instantly """
+        self.join_room(self.room)
+
+    @botcmd
+    def update_status(self, msg, args):
+        """ Update status instantly """
+        self.status = self.status
+
     @botcmd(name='status')
     def current_status(self, msg, args):
         """ Get current status """
@@ -169,7 +200,6 @@ class DataSender(PersistentBot):
     def midnight(self, msg, args):
         """ Return time to midnight """
         return str(get_midnight() - datetime.datetime.now(GMT))
-
 
     @botcmd
     def die(self, msg, args):
